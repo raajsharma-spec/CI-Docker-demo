@@ -1,4 +1,4 @@
-name: Buildd and Push Docker
+name: Build and Push Docker
 
 on:
   push:
