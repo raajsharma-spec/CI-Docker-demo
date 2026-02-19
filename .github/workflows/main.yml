@@ -5,6 +5,7 @@ on:
     branches: ["main"]
 
 jobs:
+
   docker:
     runs-on: ubuntu-latest
 
@@ -23,3 +24,24 @@ jobs:
 
       - name: Push Image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/ci-demo:latest
+
+
+  qa-approval:
+    needs: docker
+    runs-on: ubuntu-latest
+
+    environment:
+      name: QA
+
+    steps:
+      - name: Waiting for QA Approval
+        run: echo "Waiting for QA team approval..."
+
+
+  deploy:
+    needs: qa-approval
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy Step
+        run: echo "Deploying application..."
